@@ -17,6 +17,9 @@ export 'core/utils/logger_service.dart';
 export 'core/utils/network_handler.dart';
 export 'core/utils/pawapay_base_service.dart';
 
+// Export buttons
+export 'ui/payment_buttons.dart';
+
 /// Initializes all PawaPay services.
 ///
 /// This function should be called before using any of the PawaPay services.
