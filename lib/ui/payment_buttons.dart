@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pawapay_flutter/services/deposits_service.dart';
 import '../core/models/payment_models.dart';
 
-class PaymentButton extends StatelessWidget {
+class PawaPayPaymentButton extends StatelessWidget {
   final double amount;
   final MoMoCurrency currency;
   final String phoneNumber;
@@ -13,7 +13,7 @@ class PaymentButton extends StatelessWidget {
   final Function(dynamic)? onPaymentResult;
   final ButtonStyle? style;
 
-  const PaymentButton({
+  const PawaPayPaymentButton({
     super.key,
     required this.amount,
     required this.currency,

@@ -3,16 +3,54 @@ import 'package:json_annotation/json_annotation.dart';
 part 'payment_models.g.dart';
 
 enum MoMoCurrency {
-  XOF, XAF, CDF, GHS, KES, MWK, MZN, NGN, RWF, SLE, TZS, UGX, ZMW
+  XOF,
+  XAF,
+  CDF,
+  GHS,
+  KES,
+  MWK,
+  MZN,
+  NGN,
+  RWF,
+  SLE,
+  TZS,
+  UGX,
+  ZMW
 }
 
 enum Correspondent {
-  MTN_MOMO_BEN, MOOV_BEN, MTN_MOMO_CMR, ORANGE_CMR, MTN_MOMO_CIV, ORANGE_CIV,
-  VODACOM_MPESA_COD, AIRTEL_COD, ORANGE_COD, MTN_MOMO_GHA, AIRTELTIGO_GHA,
-  VODAFONE_GHA, MPESA_KEN, AIRTEL_MWI, TNM_MWI, VODACOM_MOZ, AIRTEL_NGA,
-  MTN_MOMO_NGA, AIRTEL_RWA, MTN_MOMO_RWA, FREE_SEN, ORANGE_SEN, ORANGE_SLE,
-  AIRTEL_TZA, VODACOM_TZA, TIGO_TZA, HALOTEL_TZA, AIRTEL_OAPI_UGA, MTN_MOMO_UGA,
-  AIRTEL_OAPI_ZMB, MTN_MOMO_ZMB, ZAMTEL_ZMB
+  MTN_MOMO_BEN,
+  MOOV_BEN,
+  MTN_MOMO_CMR,
+  ORANGE_CMR,
+  MTN_MOMO_CIV,
+  ORANGE_CIV,
+  VODACOM_MPESA_COD,
+  AIRTEL_COD,
+  ORANGE_COD,
+  MTN_MOMO_GHA,
+  AIRTELTIGO_GHA,
+  VODAFONE_GHA,
+  MPESA_KEN,
+  AIRTEL_MWI,
+  TNM_MWI,
+  VODACOM_MOZ,
+  AIRTEL_NGA,
+  MTN_MOMO_NGA,
+  AIRTEL_RWA,
+  MTN_MOMO_RWA,
+  FREE_SEN,
+  ORANGE_SEN,
+  ORANGE_SLE,
+  AIRTEL_TZA,
+  VODACOM_TZA,
+  TIGO_TZA,
+  HALOTEL_TZA,
+  AIRTEL_OAPI_UGA,
+  MTN_MOMO_UGA,
+  AIRTEL_OAPI_ZMB,
+  MTN_MOMO_ZMB,
+  ZAMTEL_ZMB
 }
 
 enum PaymentStatus { PENDING, COMPLETED, FAILED, CANCELLED }
@@ -263,7 +301,7 @@ class PayoutTransaction {
   final MoMoCurrency currency;
   final Correspondent correspondent;
   final String statementDescription;
-  final String country;
+  final String? country;
   final String? customerTimestamp;
 
   PayoutTransaction({
@@ -273,7 +311,7 @@ class PayoutTransaction {
     required this.currency,
     required this.correspondent,
     required this.statementDescription,
-    required this.country,
+    this.country,
     this.customerTimestamp,
   });
 

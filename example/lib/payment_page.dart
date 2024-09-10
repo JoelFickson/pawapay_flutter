@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:pawapay_flutter/pawapay_flutter.dart';
+
+class PaymentPage extends StatelessWidget {
+  const PaymentPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Complete Your Payment'),
+      ),
+      body: Column(
+        children: [
+          PaymentButton(
+            amount: 100.0,
+            currency: MoMoCurrency.XAF,
+            phoneNumber: '237123456789',
+            payoutId: '123456789',
+            correspondent: Correspondent.AIRTEL_MWI,
+            statementDescription: 'Payment for a service',
+            onPaymentResult: (result) {
+              print(result);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
