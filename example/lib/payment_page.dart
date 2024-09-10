@@ -14,10 +14,10 @@ class PaymentPage extends StatelessWidget {
         children: [
           PaymentButton(
             amount: 100.0,
-            currency: MoMoCurrency.XAF,
-            phoneNumber: '237123456789',
+            currency: MoMoCurrency.MWK,
+            phoneNumber: '265883456789',
             payoutId: '123456789',
-            correspondent: Correspondent.AIRTEL_MWI,
+            correspondent: Correspondent.TNM_MWI,
             statementDescription: 'Payment for a service',
             onPaymentResult: (result) {
               print(result);

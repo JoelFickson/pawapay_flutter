@@ -1,17 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:pawapay_flutter/services/payouts_service.dart';
 import 'package:pawapay_flutter/services/refund_service.dart';
-import 'core/utils/logger_service.dart';
 import 'core/utils/network_handler.dart';
 import 'core/utils/pawapay_base_service.dart';
 import 'services/payments_page.dart';
-
-void setupLoggerService() {
-  LoggerService.setupLogging();
-  GetIt.I.registerFactoryParam<LoggerService, String, void>(
-    (name, _) => LoggerService(name),
-  );
-}
 
 void setupNetworkHandler() {
   NetworkHandler.register();

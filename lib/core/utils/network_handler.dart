@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:logging/logging.dart';
 import 'package:pawapay_flutter/core/models/pawapay_network_response.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'constants.dart';
+import 'logger_service.dart';
 
 class NetworkHandler {
   late final Dio _dio;
-  final _log = Logger('NetworkHandler');
+  late final LoggerService _logger;
 
   static final NetworkHandler _instance = NetworkHandler._internal();
 
@@ -18,6 +18,11 @@ class NetworkHandler {
   }
 
   NetworkHandler._internal() {
+    _logger = GetIt.I<LoggerService>();
+    _initializeDio();
+  }
+
+  void _initializeDio() {
     final pawaPayJwt = dotenv.env['PAWAPAY_JWT'];
     final environment = dotenv.env['PAWAPAY_ENV'] ?? 'development';
 
@@ -25,11 +30,11 @@ class NetworkHandler {
         ? Constants.urls[Constants.pawapayProdUrl]
         : Constants.urls[Constants.pawapaySandboxUrl];
 
-    _log.info('CONFIGURATION: ${jsonEncode({
-          'pawaPayJwt': pawaPayJwt,
-          'environment': environment,
-          'baseURL': baseUrl,
-        })}');
+    _logger.info('CONFIGURATION: ${jsonEncode({
+      'pawaPayJwt': pawaPayJwt,
+      'environment': environment,
+      'baseURL': baseUrl,
+    })}');
 
     final headers = <String, dynamic>{};
 
@@ -64,7 +69,7 @@ class NetworkHandler {
   }
 
   PawaPayNetworkResponse handleErrors(dynamic error) {
-    _log.severe('Error occurred: $error');
+    _logger.severe('Error occurred: $error');
 
     String errorMessage = 'An unknown error occurred';
     int statusCode = 500;
@@ -91,10 +96,16 @@ class NetworkHandler {
 
   void _setupInterceptors() {
     _dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        _logger.info('Sending request: ${options.method} ${options.path}');
+        return handler.next(options);
+      },
       onResponse: (response, handler) {
+        _logger.info('Received response: ${response.statusCode}');
         return handler.next(response);
       },
       onError: (DioException error, handler) {
+        _logger.severe('Request error: ${error.message}');
         return handler.reject(error);
       },
     ));

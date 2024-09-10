@@ -25,7 +25,6 @@ export 'ui/payment_buttons.dart';
 /// This function should be called before using any of the PawaPay services.
 /// It sets up the dependency injection and initializes all necessary services.
 void initializePawaPay() {
-  setupLoggerService();
   setupNetworkHandler();
   setupPawapayBaseService();
   setupPaymentsPage();

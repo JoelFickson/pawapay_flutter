@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:get_it/get_it.dart';
 
@@ -22,19 +23,19 @@ class LoggerService {
     _logger.fine(message);
   }
 
-
-
   static void setupLogging() {
     Logger.root.level = Level.ALL;
     Logger.root.onRecord.listen((record) {
-      print(
+      if (kDebugMode) {
+        print(
           '${record.level.name}: ${record.time}: ${record.loggerName}: ${record.message}');
+      }
     });
   }
 }
 
 void setupLoggerService() {
   GetIt.I.registerFactoryParam<LoggerService, String, void>(
-    (name, _) => LoggerService(name),
+        (name, _) => LoggerService(name),
   );
 }
