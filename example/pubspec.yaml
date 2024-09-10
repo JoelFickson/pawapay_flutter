@@ -14,7 +14,8 @@ dependencies:
   pawapay_flutter:
     git:
       url: https://github.com/JoelFickson/pawapay_flutter.git
-      ref: main
+      ref: master
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_test:
