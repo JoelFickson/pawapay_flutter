@@ -13,7 +13,6 @@ export 'services/payouts_service.dart';
 export 'services/refund_service.dart';
 
 // Export the utilities
-export 'core/utils/logger_service.dart';
 export 'core/utils/network_handler.dart';
 export 'core/utils/pawapay_base_service.dart';
 

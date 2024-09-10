@@ -313,7 +313,7 @@ PayoutTransaction _$PayoutTransactionFromJson(Map<String, dynamic> json) =>
       currency: $enumDecode(_$MoMoCurrencyEnumMap, json['currency']),
       correspondent: $enumDecode(_$CorrespondentEnumMap, json['correspondent']),
       statementDescription: json['statementDescription'] as String,
-      country: json['country'] as String,
+      country: json['country'] as String?,
       customerTimestamp: json['customerTimestamp'] as String?,
     );
 

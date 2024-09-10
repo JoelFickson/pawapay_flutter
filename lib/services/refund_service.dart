@@ -1,17 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:pawapay_flutter/core/utils/network_handler.dart';
-import 'package:pawapay_flutter/core/utils/logger_service.dart';
 import 'package:pawapay_flutter/core/models/payment_models.dart';
 
 class Refunds {
   final NetworkHandler _networkHandler;
-  final LoggerService _logger;
   final String _baseEndpoint;
 
   Refunds({
     required NetworkHandler networkHandler,
   })  : _networkHandler = networkHandler,
-        _logger = GetIt.I<LoggerService>(),
         _baseEndpoint = '/refunds';
 
   /// Asynchronously submits a request to create a refund for a specific transaction. This method sends the refund details,
@@ -34,12 +31,12 @@ class Refunds {
         },
       );
 
-      _logger.info(
+      print(
           'Sending refund request for deposit: ${refundData['depositId']} with refundId: ${refundData['refundId']}');
 
       return response.data as RefundResponse;
     } catch (error) {
-      _logger.severe('Refund request failed: $error');
+      print('Refund request failed: $error');
       return _networkHandler.handleErrors(error);
     }
   }
@@ -58,11 +55,11 @@ class Refunds {
       final endpoint = '$_baseEndpoint/$refundId';
       final response = await _networkHandler.getInstance().get(endpoint);
 
-      _logger.info('Refund details retrieved successfully: ${response.data}');
+      print('Refund details retrieved successfully: ${response.data}');
 
       return response.data as RefundTransaction;
     } catch (error) {
-      _logger.severe('Failed to retrieve refund status: $error');
+      print('Failed to retrieve refund status: $error');
       return _networkHandler.handleErrors(error);
     }
   }

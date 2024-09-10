@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:pawapay_flutter/core/utils/network_handler.dart';
-import 'package:pawapay_flutter/core/utils/logger_service.dart';
 
 import '../core/models/payment_models.dart';
 import '../core/utils/pawapay_base_service.dart';
@@ -8,22 +7,20 @@ import '../core/utils/pawapay_base_service.dart';
 class Deposits {
   final NetworkHandler _networkHandler;
   final PawapayBaseService _pawapayBaseService;
-  final LoggerService _logger;
   final String _baseEndpoint = '/deposits';
 
   Deposits({
     required NetworkHandler networkHandler,
     required PawapayBaseService pawapayBaseService,
   })  : _networkHandler = networkHandler,
-        _pawapayBaseService = pawapayBaseService,
-        _logger = GetIt.I<LoggerService>();
+        _pawapayBaseService = pawapayBaseService;
 
   Future<dynamic> sendDeposit(PayoutTransaction transaction) async {
     try {
       final phoneNumber =
           _pawapayBaseService.formatPhoneNumber(transaction.phoneNumber);
 
-      _logger.info(
+      print(
           'Sending payout to $phoneNumber the amount of ${transaction.amount} '
           'with payoutId ${transaction.payoutId} and currency ${transaction.currency}');
 
@@ -43,11 +40,11 @@ class Deposits {
         },
       );
 
-      _logger.info('Payout transaction successful: ${response.data}');
+      print('Payout transaction successful: ${response.data}');
 
       return response.data as PawaPayPayoutTransaction;
     } catch (error) {
-      _logger.severe('Payout transaction failed: $error');
+      print('Payout transaction failed: $error');
       return _networkHandler.handleErrors(error);
     }
   }
@@ -57,11 +54,11 @@ class Deposits {
       final endpoint = '$_baseEndpoint/$depositId';
       final response = await _networkHandler.getInstance().get(endpoint);
 
-      _logger.info('Deposit details retrieved successfully: ${response.data}');
+      print('Deposit details retrieved successfully: ${response.data}');
 
       return response.data as List<PaymentTransaction>;
     } catch (error) {
-      _logger.severe('Failed to retrieve deposit details: $error');
+      print('Failed to retrieve deposit details: $error');
       return _networkHandler.handleErrors(error);
     }
   }
@@ -73,11 +70,11 @@ class Deposits {
         data: {'depositId': depositId},
       );
 
-      _logger.info('Callback resent successfully: ${response.data}');
+      print('Callback resent successfully: ${response.data}');
 
       return response.data as ResendCallbackResponse;
     } catch (error) {
-      _logger.severe('Failed to resend callback: $error');
+      print('Failed to resend callback: $error');
       return _networkHandler.handleErrors(error);
     }
   }

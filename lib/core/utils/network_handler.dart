@@ -5,11 +5,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pawapay_flutter/core/models/pawapay_network_response.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'constants.dart';
-import 'logger_service.dart';
 
 class NetworkHandler {
   late final Dio _dio;
-  late final LoggerService _logger;
 
   static final NetworkHandler _instance = NetworkHandler._internal();
 
@@ -18,7 +16,6 @@ class NetworkHandler {
   }
 
   NetworkHandler._internal() {
-    _logger = GetIt.I<LoggerService>();
     _initializeDio();
   }
 
@@ -30,7 +27,7 @@ class NetworkHandler {
         ? Constants.urls[Constants.pawapayProdUrl]
         : Constants.urls[Constants.pawapaySandboxUrl];
 
-    _logger.info('CONFIGURATION: ${jsonEncode({
+    print('CONFIGURATION: ${jsonEncode({
       'pawaPayJwt': pawaPayJwt,
       'environment': environment,
       'baseURL': baseUrl,
@@ -69,7 +66,7 @@ class NetworkHandler {
   }
 
   PawaPayNetworkResponse handleErrors(dynamic error) {
-    _logger.severe('Error occurred: $error');
+    print('Error occurred: $error');
 
     String errorMessage = 'An unknown error occurred';
     int statusCode = 500;
@@ -97,15 +94,15 @@ class NetworkHandler {
   void _setupInterceptors() {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        _logger.info('Sending request: ${options.method} ${options.path}');
+        print('Sending request: ${options.method} ${options.path}');
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        _logger.info('Received response: ${response.statusCode}');
+        print('Received response: ${response.statusCode}');
         return handler.next(response);
       },
       onError: (DioException error, handler) {
-        _logger.severe('Request error: ${error.message}');
+        print('Request error: ${error.message}');
         return handler.reject(error);
       },
     ));

@@ -1,13 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:pawapay_flutter/core/utils/network_handler.dart';
 import 'package:pawapay_flutter/core/utils/pawapay_base_service.dart';
-import 'package:pawapay_flutter/core/utils/logger_service.dart';
 import 'package:pawapay_flutter/core/models/payment_models.dart';
 
 class Payouts {
   final NetworkHandler _networkHandler;
   final PawapayBaseService _pawapayBaseService;
-  final LoggerService _logger;
   final String _baseEndpoint;
 
   Payouts({
@@ -15,7 +13,6 @@ class Payouts {
     required PawapayBaseService pawapayBaseService,
   })  : _networkHandler = networkHandler,
         _pawapayBaseService = pawapayBaseService,
-        _logger = GetIt.I<LoggerService>(),
         _baseEndpoint = '/payouts';
 
   /// Sends a payout transaction to the specified endpoint, processing the transaction
@@ -39,7 +36,7 @@ class Payouts {
       final phoneNumber =
           _pawapayBaseService.formatPhoneNumber(transaction.phoneNumber);
 
-      _logger.info(
+      print(
           'Sending payout to $phoneNumber the amount of ${transaction.amount} '
           'with payoutId ${transaction.payoutId} and currency ${transaction.currency}');
 
@@ -59,11 +56,11 @@ class Payouts {
         },
       );
 
-      _logger.info('Payout transaction successful: ${response.data}');
+      print('Payout transaction successful: ${response.data}');
 
       return response.data as PawaPayPayoutTransaction;
     } catch (error) {
-      _logger.severe('Payout transaction failed: $error');
+      print('Payout transaction failed: $error');
       return _networkHandler.handleErrors(error);
     }
   }
@@ -102,11 +99,11 @@ class Payouts {
         data: {'formattedTransactions': formattedTransactions},
       );
 
-      _logger.info('Bulk payout transaction successful: ${response.data}');
+      print('Bulk payout transaction successful: ${response.data}');
 
       return response.data as List<PawaPayPayoutTransaction>;
     } catch (error) {
-      _logger.severe('Bulk payout transaction failed: $error');
+      print('Bulk payout transaction failed: $error');
       return _networkHandler.handleErrors(error);
     }
   }
@@ -125,11 +122,11 @@ class Payouts {
       final response =
           await _networkHandler.getInstance().get('$_baseEndpoint/$depositId');
 
-      _logger.info('Payout details retrieved successfully: ${response.data}');
+      print('Payout details retrieved successfully: ${response.data}');
 
       return response.data as PawaPayPayoutTransaction;
     } catch (error) {
-      _logger.severe('Failed to retrieve payout details: $error');
+      print('Failed to retrieve payout details: $error');
       return _networkHandler.handleErrors(error);
     }
   }

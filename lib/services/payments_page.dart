@@ -1,18 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:pawapay_flutter/core/utils/network_handler.dart';
-import 'package:pawapay_flutter/core/utils/logger_service.dart';
 
 import '../core/models/payment_data.dart';
 
 class PaymentsPage {
   final NetworkHandler _networkHandler;
-  final LoggerService _logger;
+
   final String _baseEndpoint;
 
   PaymentsPage({
     required NetworkHandler networkHandler,
   })  : _networkHandler = networkHandler,
-        _logger = GetIt.I<LoggerService>(),
         _baseEndpoint = 'v1/widget/sessions';
 
   /// Initiates a payment process by sending payment data to v1/widget/sessions.
@@ -46,7 +44,7 @@ class PaymentsPage {
         },
       );
 
-      _logger.info(
+      print(
           'Sending payment initiation request for deposit: ${paymentData.depositId} with amount: ${paymentData.price}');
 
       return InitiatePaymentResponse(
@@ -54,7 +52,7 @@ class PaymentsPage {
         error: false,
       );
     } catch (error) {
-      _logger.severe('Payment initiation failed: $error');
+      print('Payment initiation failed: $error');
       return _networkHandler.handleErrors(error);
     }
   }
