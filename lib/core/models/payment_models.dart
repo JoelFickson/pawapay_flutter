@@ -15,7 +15,9 @@ enum MoMoCurrency {
   SLE,
   TZS,
   UGX,
-  ZMW
+  ZMW;
+
+  String get code => name;
 }
 
 enum Correspondent {
@@ -50,7 +52,9 @@ enum Correspondent {
   MTN_MOMO_UGA,
   AIRTEL_OAPI_ZMB,
   MTN_MOMO_ZMB,
-  ZAMTEL_ZMB
+  ZAMTEL_ZMB;
+
+  String get code => name;
 }
 
 enum PaymentStatus { PENDING, COMPLETED, FAILED, CANCELLED }

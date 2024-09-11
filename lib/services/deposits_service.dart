@@ -29,8 +29,8 @@ class Deposits {
         data: {
           'payoutId': transaction.payoutId,
           'amount': transaction.amount.toString(),
-          'currency': transaction.currency.name.toString(),
-          'correspondent': transaction.correspondent.name.toString(),
+          'currency': transaction.currency.code,
+          'correspondent': transaction.correspondent.code,
           'recipient': {
             'type': 'MSISDN',
             'address': {
