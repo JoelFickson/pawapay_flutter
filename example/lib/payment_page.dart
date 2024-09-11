@@ -11,8 +11,10 @@ class PaymentPage extends StatelessWidget {
         title: const Text('Complete Your Payment'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          PaymentButton(
+          PawaPayPaymentButton(
             amount: 100.0,
             currency: MoMoCurrency.MWK,
             phoneNumber: '265883456789',

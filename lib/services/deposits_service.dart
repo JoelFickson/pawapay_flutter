@@ -21,7 +21,7 @@ class Deposits {
           _pawapayBaseService.formatPhoneNumber(transaction.phoneNumber);
 
       print(
-          'Sending payout to $phoneNumber the amount of ${transaction.amount} '
+          'Sending payment to $phoneNumber the amount of ${transaction.amount} '
           'with payoutId ${transaction.payoutId} and currency ${transaction.currency}');
 
       final response = await _networkHandler.getInstance().post(
@@ -29,11 +29,13 @@ class Deposits {
         data: {
           'payoutId': transaction.payoutId,
           'amount': transaction.amount.toString(),
-          'currency': transaction.currency,
-          'correspondent': transaction.correspondent,
+          'currency': transaction.currency.toString(),
+          'correspondent': transaction.correspondent.toString(),
           'recipient': {
             'type': 'MSISDN',
-            'address': {'value': phoneNumber}
+            'address': {
+              'value': _pawapayBaseService.formatPhoneNumber(phoneNumber)
+            }
           },
           'customerTimestamp': DateTime.now().toIso8601String(),
           'statementDescription': transaction.statementDescription
