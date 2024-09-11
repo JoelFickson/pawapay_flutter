@@ -95,10 +95,11 @@ class PawaPayPaymentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var currencyValue = currency.name ;
     return ElevatedButton(
       style: style,
       onPressed: () => _handlePayment(context),
-      child: Text('Pay $currency $amount'),
+      child: Text('Pay $currencyValue $amount'),
     );
   }
 }
