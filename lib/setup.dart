@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:pawapay_flutter/services/deposits_service.dart';
 import 'package:pawapay_flutter/services/payouts_service.dart';
 import 'package:pawapay_flutter/services/refund_service.dart';
 import 'core/utils/network_handler.dart';
@@ -34,6 +35,15 @@ void setupRefundsService() {
   GetIt.I.registerSingleton<Refunds>(
     Refunds(
       networkHandler: GetIt.I<NetworkHandler>(),
+    ),
+  );
+}
+
+void setupDeposits() {
+  GetIt.I.registerSingleton<Deposits>(
+    Deposits(
+      networkHandler: GetIt.I<NetworkHandler>(),
+      pawapayBaseService: GetIt.I<PawapayBaseService>(),
     ),
   );
 }

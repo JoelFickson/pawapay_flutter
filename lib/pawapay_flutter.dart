@@ -29,4 +29,5 @@ void initializePawaPay() {
   setupPaymentsPage();
   setupPayoutsService();
   setupRefundsService();
+  setupDeposits();
 }
