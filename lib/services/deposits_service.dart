@@ -18,11 +18,11 @@ class Deposits {
   Future<dynamic> sendDeposit(PayoutTransaction transaction) async {
     try {
       final phoneNumber =
-          _pawapayBaseService.formatPhoneNumber(transaction.phoneNumber);
+      _pawapayBaseService.formatPhoneNumber(transaction.phoneNumber);
 
       print(
           'Sending payment to $phoneNumber the amount of ${transaction.amount} '
-          'with payoutId ${transaction.payoutId} and currency ${transaction.currency}');
+              'with payoutId ${transaction.payoutId} and currency ${transaction.currency.code}');
 
       final response = await _networkHandler.getInstance().post(
         _baseEndpoint,
@@ -44,7 +44,8 @@ class Deposits {
 
       print('Payout transaction successful: ${response.data}');
 
-      return response.data as PawaPayPayoutTransaction;
+      // You might need to create a factory method in PawaPayPayoutTransaction to parse the response
+      return PawaPayPayoutTransaction.fromJson(response.data);
     } catch (error) {
       print('Payout transaction failed: $error');
       return _networkHandler.handleErrors(error);

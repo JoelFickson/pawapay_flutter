@@ -44,62 +44,19 @@ class PawaPayPaymentButton extends StatelessWidget {
       if (onPaymentResult != null) {
         onPaymentResult!(result);
       }
-
-      if (context.mounted) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Payment Successful'),
-              content:
-                  Text('Your payment of $currency $amount was successful.'),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      }
     } catch (error) {
       if (onPaymentResult != null) {
         onPaymentResult!(error);
-      }
-
-      if (context.mounted) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Payment Failed'),
-              content: Text(
-                  'Your payment of $currency $amount failed. Error: $error'),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var currencyValue = currency.code ;
     return ElevatedButton(
       style: style,
       onPressed: () => _handlePayment(context),
-      child: Text('Pay $currencyValue $amount'),
+      child: Text('Pay ${currency.code} $amount'),
     );
   }
 }

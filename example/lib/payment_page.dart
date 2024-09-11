@@ -22,7 +22,7 @@ class PaymentPage extends StatelessWidget {
             correspondent: Correspondent.TNM_MWI,
             statementDescription: 'Payment for a service',
             onPaymentResult: (result) {
-              print(result);
+              print(result.toString());
             },
           ),
         ],
